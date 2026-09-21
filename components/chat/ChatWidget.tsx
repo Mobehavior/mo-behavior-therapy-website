@@ -55,37 +55,36 @@ export default function ChatWidget({ open, onClose }: { open: boolean; onClose: 
   }
 
   function askForSlot(slot: SlotKey, currentDraft: LeadDraft) {
-    const prompts = t.raw("prompts") as Record<string, string>;
     switch (slot) {
       case "whoFor":
-        return pushAssistant(prompts.whoFor);
+        return pushAssistant(t("prompts.whoFor"));
       case "contactName":
-        return pushAssistant(prompts.contactName);
+        return pushAssistant(t("prompts.contactName"));
       case "relationship":
-        return pushAssistant(prompts.relationship);
+        return pushAssistant(t("prompts.relationship"));
       case "clientAge":
-        return pushAssistant(prompts.clientAge);
+        return pushAssistant(t("prompts.clientAge"));
       case "cityZip":
-        return pushAssistant(prompts.cityZip);
+        return pushAssistant(t("prompts.cityZip"));
       case "setting":
-        return pushAssistant(prompts.setting);
+        return pushAssistant(t("prompts.setting"));
       case "insurance":
-        return pushAssistant(prompts.insurance);
+        return pushAssistant(t("prompts.insurance"));
       case "previousAba":
-        return pushAssistant(prompts.previousAba);
+        return pushAssistant(t("prompts.previousAba"));
       case "documents":
-        return pushAssistant(prompts.documents);
+        return pushAssistant(t("prompts.documents"));
       case "phone":
-        return pushAssistant(prompts.phone);
+        return pushAssistant(t("prompts.phone"));
       case "email":
-        return pushAssistant(prompts.email);
+        return pushAssistant(t("prompts.email"));
       case "contactMethod":
-        return pushAssistant(prompts.contactMethod);
+        return pushAssistant(t("prompts.contactMethod"));
       case "contactTime":
-        return pushAssistant(prompts.contactTime);
+        return pushAssistant(t("prompts.contactTime"));
       case "consent": {
         setPendingConsent(true);
-        return pushAssistant(prompts.consent);
+        return pushAssistant(t("prompts.consent"));
       }
     }
   }
@@ -222,11 +221,6 @@ export default function ChatWidget({ open, onClose }: { open: boolean; onClose: 
     advance(merged);
   }
 
-  function handleQuickAction(key: string) {
-    const labels = t.raw("quickActions") as Record<string, string>;
-    handleSend(labels[key]);
-  }
-
   if (!open) return null;
 
   const settingOptions = tf.raw("options.settings") as string[];
@@ -282,7 +276,7 @@ export default function ChatWidget({ open, onClose }: { open: boolean; onClose: 
             {Object.entries(t.raw("quickActions") as Record<string, string>).map(([key, label]) => (
               <button
                 key={key}
-                onClick={() => handleQuickAction(key)}
+                onClick={() => handleSend(label)}
                 className="rounded-full border border-brand-blue/30 bg-brand-blue-light px-3 py-1.5 text-xs font-medium text-brand-blue hover:bg-brand-blue hover:text-white"
               >
                 {label}
