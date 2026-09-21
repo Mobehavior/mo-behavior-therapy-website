@@ -124,20 +124,30 @@ export async function sendInternalNotification(lead: LeadRecord) {
   });
 }
 
-const CONFIRMATION_COPY: Record<
-  string,
-  { subject: string; greeting: string; body1: string; body2: string; body3: string; closing: string; signOff: string; tagline: string }
-> = {
-  en: {
-    subject: "We've Received Your Request | MO Behavior Therapy",
-    greeting: "Hi {firstName},",
-    body1: "Thank you for contacting MO Behavior Therapy.",
-    body2: "We've received your information. A member of our team will review your request and contact you soon regarding the next steps.",
-    body3: "If you'd prefer to speak with us directly, please call:",
-    closing: "Thank you for considering MO Behavior Therapy.",
-    signOff: "MO Behavior Therapy Team",
-    tagline: "Building Brighter Futures, One Child at a Time.",
-  },
+type ConfirmationCopy = {
+  subject: string;
+  greeting: string;
+  body1: string;
+  body2: string;
+  body3: string;
+  closing: string;
+  signOff: string;
+  tagline: string;
+};
+
+const EN_CONFIRMATION_COPY: ConfirmationCopy = {
+  subject: "We've Received Your Request | MO Behavior Therapy",
+  greeting: "Hi {firstName},",
+  body1: "Thank you for contacting MO Behavior Therapy.",
+  body2: "We've received your information. A member of our team will review your request and contact you soon regarding the next steps.",
+  body3: "If you'd prefer to speak with us directly, please call:",
+  closing: "Thank you for considering MO Behavior Therapy.",
+  signOff: "MO Behavior Therapy Team",
+  tagline: "Building Brighter Futures, One Child at a Time.",
+};
+
+const CONFIRMATION_COPY: Record<string, ConfirmationCopy> = {
+  en: EN_CONFIRMATION_COPY,
   es: {
     subject: "Hemos recibido su solicitud | MO Behavior Therapy",
     greeting: "Hola {firstName},",
@@ -200,7 +210,7 @@ export async function sendClientConfirmation(lead: LeadRecord) {
   const email = d.email;
   if (!email) return; // nothing to send to
 
-  const copy = CONFIRMATION_COPY[lead.language] || CONFIRMATION_COPY.en;
+  const copy = CONFIRMATION_COPY[lead.language] || EN_CONFIRMATION_COPY;
   const firstName = (d.contactName || "").split(" ")[0] || (lead.language === "es" ? "familia" : "there");
 
   const html = `
